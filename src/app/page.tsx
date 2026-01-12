@@ -4,6 +4,8 @@ import AboutUs from "@/components/AboutUs";
 import NewProducts from "@/components/NewProducts";
 import ShopSection from "@/components/ShopSection";
 import MerchGrid from "@/components/MerchGrid";
+import Events from "@/components/Events";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -23,7 +25,9 @@ export default function Home() {
         </h2>
         <ShopSection />
         <MerchGrid />
+        <Events />
       </main>
+      <Footer />
     </div>
   );
 }

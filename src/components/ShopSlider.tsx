@@ -1,7 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { useUiStore } from "@/store/useUiStore";
+import { useCartStore } from "@/store/useCartStore";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useFavoriteStore } from "@/store/useFavoriteStore";
 
 type Item = {
   id: string;
@@ -17,12 +20,12 @@ type Props = {
 };
 
 const TEAS: Item[] = [
-  { id: "1", name: "Citrus Spice Rooibos", weight: "100g", bagSrc: "/shop-tea-pack1.png" },
-  { id: "2", name: "Blossom Green Harmony", weight: "100g", bagSrc: "/shop-tea-pack2.png" },
-  { id: "3", name: "Blue Midnight Ear", weight: "100g", bagSrc: "/shop-tea-pack3.png" },
-  { id: "4", name: "Chamomile Whispe", weight: "100g", bagSrc: "/shop-tea-pack4.png" },
-  { id: "5", name: "Golden Rooibos Glo", weight: "100g", bagSrc: "/shop-tea-pack5.png" },
-  { id: "6", name: "Berry Rouge Dream", weight: "100g", bagSrc: "/shop-tea-pack6.png" },
+  { id: "shop-1", name: "Citrus Spice Rooibos", weight: "100g", bagSrc: "/shop-tea-pack1.png" },
+  { id: "shop-2", name: "Blossom Green Harmony", weight: "100g", bagSrc: "/shop-tea-pack2.png" },
+  { id: "shop-3", name: "Blue Midnight Ear", weight: "100g", bagSrc: "/shop-tea-pack3.png" },
+  { id: "shop-4", name: "Chamomile Whispe", weight: "100g", bagSrc: "/shop-tea-pack4.png" },
+  { id: "shop-5", name: "Golden Rooibos Glo", weight: "100g", bagSrc: "/shop-tea-pack5.png" },
+  { id: "shop-6", name: "Berry Rouge Dream", weight: "100g", bagSrc: "/shop-tea-pack6.png" },
 ];
 
 export default function ShopSlider({
@@ -151,11 +154,10 @@ export default function ShopSlider({
           <button
             key={i}
             onClick={() => setIndex(CLONES + i)}
-            className={`h-2.5 rounded-full transition-all duration-300 ${
-              i === (index - CLONES) % items.length
-                ? "bg-black w-8"
-                : "bg-gray-300 w-2.5 hover:bg-gray-400"
-            }`}
+            className={`h-2.5 rounded-full transition-all duration-300 ${i === (index - CLONES) % items.length
+              ? "bg-black w-8"
+              : "bg-gray-300 w-2.5 hover:bg-gray-400"
+              }`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
@@ -165,6 +167,24 @@ export default function ShopSlider({
 }
 
 function Card({ item }: { item: Item }) {
+  const addToCart = useCartStore((state) => state.add);
+  const openShop = useUiStore((state) => state.openShop);
+
+  const favHasHydrated = useFavoriteStore((state) => state.hasHydrated);
+  const toggleFavorite = useFavoriteStore((state) => state.toggle);
+  const isFavorite = useFavoriteStore((state) => state.has(item.id));
+
+  const onBuy = () => {
+    addToCart(item.id);
+    openShop();
+  };
+
+  const onToggleFavorite = () => {
+    toggleFavorite(item.id);
+  };
+
+  const safeIsFavorite = favHasHydrated ? isFavorite : false;
+
   return (
     <article className="text-center">
       <div className="relative w-[260px]">
@@ -179,15 +199,38 @@ function Card({ item }: { item: Item }) {
         />
       </div>
 
-      <p className="mt-6 text-[14px] text-black/70">{item.weight ?? "100g"}</p>
-      <h3 className="mt-1 text-[18px] leading-[1.2]">{item.name}</h3>
+      <p className="mt-6 text-[14px] text-black/70">
+        {item.weight ?? "100g"}
+      </p>
+
+      <h3 className="mt-1 text-[18px] leading-[1.2]">
+        {item.name}
+      </h3>
 
       <div className="mt-3 flex items-center justify-center gap-9">
-        <button className="px-[29px] py-1 rounded-full bg-black text-white text-[20px] tracking-[0.08em] transition hover:opacity-90 active:opacity-80">
+        {/* BUY */}
+        <button
+          onClick={onBuy}
+          className="px-[29px] py-1 rounded-full bg-black text-white text-[20px] tracking-[0.08em] transition hover:opacity-90 active:opacity-80"
+        >
           BUY
         </button>
-        <button className="grid place-items-center w-9 h-9">
-          <img src="/icons/favorite-icon.png" alt="favorite" />
+
+        {/* FAVORITE */}
+        <button
+          onClick={onToggleFavorite}
+          aria-label="favorite"
+          className="grid place-items-center w-9 h-9"
+        >
+          <img
+            src={
+              safeIsFavorite
+                ? "/icons/favorite-icon-active.png"
+                : "/icons/favorite-icon.png"
+            }
+            alt="favorite"
+            className="transition-opacity"
+          />
         </button>
       </div>
     </article>
