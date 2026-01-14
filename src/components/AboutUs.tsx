@@ -38,18 +38,19 @@ export default function AboutUs() {
 
 function ShopCards() {
   const cards = [
-    { title: "TEA", image: "/tea-card.png", cta: "shop now" },
-    { title: "MERCH", image: "/mearc-card.png", cta: "shop now" },
-    { title: "OTHER", image: "/other-card.png", cta: "watch now" },
+    { title: "TEA", image: "/tea-card.png", cta: "shop now", href: "#shop" },
+    { title: "MERCH", image: "/mearc-card.png", cta: "shop now", href: "#merch" },
+    { title: "OTHER", image: "/other-card.png", cta: "watch now", href: "#events" },
   ];
 
   return (
     <section className="w-full max-w-[1200px] mx-auto flex justify-between">
       {cards.map((card) => (
-        <div
+        <a
           key={card.title}
+          href={card.href}
           style={{ backgroundImage: `url('${card.image}')` }}
-          className="bg-no-repeat h-[535px] w-full max-w-[358px] bg-cover"
+          className="bg-no-repeat h-[535px] w-full max-w-[358px] bg-cover block cursor-pointer hover:opacity-90 transition-opacity duration-300"
         >
           <h3 className="font-normal text-[64px] leading-[1] text-[#FFFDFD] pt-[144px] text-center">
             {card.title}
@@ -57,7 +58,7 @@ function ShopCards() {
           <p className="font-normal text-[40px] leading-[1] text-white text-center">
             {card.cta}
           </p>
-        </div>
+        </a>
       ))}
     </section>
   );

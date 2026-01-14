@@ -24,9 +24,9 @@ export default function Header() {
         <span className="font-normal text-[32px] leading-[1]">pea tea?</span>
 
         <nav className="flex gap-[30px]">
-          <a className="font-normal text-[24px] leading-[1]" href="#">Shop</a>
-          <a className="font-normal text-[24px] leading-[1]" href="#">About</a>
-          <a className="font-normal text-[24px] leading-[1]" href="#">Contact</a>
+          <a className="font-normal text-[24px] leading-[1] transition-colors hover:text-green-800" href="#shop">Shop</a>
+          <a className="font-normal text-[24px] leading-[1] transition-colors hover:text-green-800" href="#about">About</a>
+          <a className="font-normal text-[24px] leading-[1] transition-colors hover:text-green-800" href="#contact">Contact</a>
         </nav>
 
         <div className="flex gap-5">

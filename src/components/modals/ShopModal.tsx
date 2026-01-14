@@ -17,7 +17,7 @@ export default function ShopModal({ open, onClose }: Props) {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <div className="w-[360px] h-[360px] rounded-[56px] bg-[#7A7A7A]/80 px-6 py-6 flex flex-col">
+      <div className="w-[552px] h-[556px] rounded-[56px] bg-[#02030032] px-6 py-6 flex flex-col">
         <div className="flex-1 space-y-4 overflow-auto pr-1">
           {ids.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center gap-5">

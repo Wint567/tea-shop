@@ -1,11 +1,8 @@
 "use client";
 
 import { PRODUCTS } from "@/data/products";
-import { useCartStore } from "@/store/useCartStore";
 
 export default function NewProducts() {
-  const add = useCartStore((s) => s.add);
-
   const products = PRODUCTS.filter((p) => p.id.startsWith("new-"));
 
   return (
@@ -26,12 +23,12 @@ export default function NewProducts() {
               <p className="font-normal text-[14px] leading-[1] text-white text-center">{p.name}</p>
             </div>
 
-            <button
-              onClick={() => add(p.id)}
-              className="bg-[#262613] py-[5px] px-[14px] mt-[28px] text-white rounded-[36px] hover:bg-white hover:text-black cursor-pointer transition-colors duration-300 ease-in-out"
+            <a
+              href="#shop"
+              className="bg-[#262613] py-[5px] px-[14px] mt-[28px] text-white rounded-[36px] hover:bg-white hover:text-black cursor-pointer transition-colors duration-300 ease-in-out inline-block text-center"
             >
               BUY NOW
-            </button>
+            </a>
           </div>
         ))}
       </div>

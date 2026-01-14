@@ -18,16 +18,26 @@ export default function Home() {
           </h1>
         </section>
         <Marquee />
-        <AboutUs />
+        <div id="about">
+          <AboutUs />
+        </div>
         <NewProducts />
-        <h2 className="font-normal text-[96px] leading-[1] bg-[#D8DEC5] text-center mb-3 mt-[44px]">
-          SHOP SHOP SHOP SHOP
-        </h2>
-        <ShopSection />
-        <MerchGrid />
-        <Events />
+        <div id="shop">
+          <h2 className="font-normal text-[96px] leading-[1] bg-[#D8DEC5] text-center mb-3 mt-[44px]">
+            SHOP SHOP SHOP SHOP
+          </h2>
+          <ShopSection />
+        </div>
+        <div id="merch">
+          <MerchGrid />
+        </div>
+        <div id="events">
+          <Events />
+        </div>
       </main>
-      <Footer />
+      <div id="contact">
+        <Footer />
+      </div>
     </div>
   );
 }
