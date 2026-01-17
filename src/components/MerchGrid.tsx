@@ -46,11 +46,11 @@ interface MerchCardProps {
 
 function MerchCard({ id, image, text }: MerchCardProps) {
     const add = useCartStore((state) => state.add);
-
     const productId = `merch-${id}`;
-
     const toggleFav = useFavoriteStore((state) => state.toggle);
+    const favHasHydrated = useFavoriteStore((state) => state.hasHydrated);
     const isFav = useFavoriteStore((state) => state.has(productId));
+    const safeIsFav = favHasHydrated ? isFav : false;
 
     return (
         <div className="group relative px-[18px] pt-[37px] pb-3 bg-[#5555554D] w-full max-w-[266px] border border-solid [border-image-source:linear-gradient(180deg,#948D8D_0%,#262323_99.99%)] [border-image-slice:1] overflow-hidden shadow-none">
@@ -72,7 +72,7 @@ function MerchCard({ id, image, text }: MerchCardProps) {
                 <button onClick={() => toggleFav(productId)} aria-label="favorite" className="w-10 h-10 flex items-center justify-center">
                     <img
                         src={
-                            isFav
+                            safeIsFav
                                 ? "/icons/favorite-icon-active.png"
                                 : "/icons/favorite-icon.png"
                         }
@@ -81,7 +81,7 @@ function MerchCard({ id, image, text }: MerchCardProps) {
                     />
                 </button>
             </div>
-            
+
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0">
                 <p className="font-normal text-[16px] leading-[1] text-white text-center px-6">
                     {text}

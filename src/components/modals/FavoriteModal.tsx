@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Modal from "./Modal";
 import { PRODUCTS_MAP } from "../../data/products";
 import { useFavoriteStore } from "../../store/useFavoriteStore";
@@ -12,13 +13,35 @@ type Props = {
 export default function FavoriteModal({ open, onClose }: Props) {
   const idsObj = useFavoriteStore((state) => state.ids);
   const remove = useFavoriteStore((state) => state.remove);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [hasScrollbar, setHasScrollbar] = useState(false);
 
   const ids = Object.keys(idsObj);
+
+  useEffect(() => {
+    const checkScrollbar = () => {
+      if (scrollRef.current) {
+        const hasScroll = scrollRef.current.scrollHeight > scrollRef.current.clientHeight;
+        setHasScrollbar(hasScroll);
+      }
+    };
+
+    checkScrollbar();
+    const resizeObserver = new ResizeObserver(checkScrollbar);
+    if (scrollRef.current) {
+      resizeObserver.observe(scrollRef.current);
+    }
+
+    return () => resizeObserver.disconnect();
+  }, [ids]);
 
   return (
     <Modal open={open} onClose={onClose}>
       <div className="w-[552px] h-[552px] rounded-[56px] bg-[#02030032] px-6 py-6 flex flex-col">
-        <div className="flex-1 space-y-4 overflow-auto pr-1">
+        <div
+          ref={scrollRef}
+          className={`flex-1 space-y-8 overflow-auto custom-scrollbar ${hasScrollbar ? "pr-5" : ""}`}
+        >
           {ids.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center gap-5">
               <img src="/icons/favorite-icon.png" alt="favorite" className="w-[52px] h-[52px]" />

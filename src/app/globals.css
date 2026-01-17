@@ -37,4 +37,24 @@ body {
   .animate-scroll-images {
     animation: scroll-images 40s linear infinite;
   }
+
+  /* Custom scrollbar for modals - simple white line */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 1px;
+  }
+
+  /* Firefox scrollbar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: white transparent;
+  }
 }
